@@ -79,10 +79,38 @@ class Tower {
     }
 }
 
-let tower = Tower(x: 0, y: 0)
-let enemy = Enemy(x: 1, y: 1)
+// Inherits from Enemy
+class SuperEnemy: Enemy {
+    let isSuper: Bool = true
+    
+    override init(x: Int, y: Int) {
+        super.init(x: x, y: y)
+        self.life = 1
+    }
+}
 
-tower.fireAtEnemy(enemy)
+class LaserTower: Tower {
+    override init(x: Int, y: Int) {
+        super.init(x: x, y: x)
+        self.range = 100
+        self.strength = 100
+    }
+    
+    override func fireAtEnemy(enemy: Enemy) {
+        while enemy.life > 0 {
+            enemy.decreaseHealth(strength)
+            print("Enemy vanquished")
+        }
+    }
+}
+
+let tower = Tower(x: 0, y: 0)
+let enemy1 = Enemy(x: 1, y: 1)
+
+let laserTower = LaserTower(x: 0, y: 0)
+let superEnemy = SuperEnemy(x: 20, y: 20)
+
+laserTower.fireAtEnemy(superEnemy)
 
 
 
